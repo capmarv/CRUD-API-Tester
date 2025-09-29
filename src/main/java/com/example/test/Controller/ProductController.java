@@ -3,19 +3,33 @@ package com.example.test.Controller;
 import com.example.test.Model.Product;
 import com.example.test.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class ProductController {
 
-        @Autowired
-        ProductService service;
+    @Autowired
+    ProductService service;
 
-    @RequestMapping("/products")
-        public List<Product> getproducts() {
-            return service.getproducts();
+    @GetMapping("/products")
+    public List<Product> getproducts() {
+        return service.getproducts();
+    }
+
+    @GetMapping("/products/{pid}")
+    public Product getproductById(@PathVariable("pid") int pid) {
+        return service.getproductById(pid);
+    }
+
+    @PostMapping("/products")
+    public Product addproduct(@RequestBody Product product) {
+        return service.addproduct(product);
+    }
+
+    @PostMapping("/product/update")
+    public Product updateproduct(@RequestBody Product product) {
+        return service.updateproduct(product);
     }
 }
