@@ -10,9 +10,11 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    List<Product> Products =  new ArrayList<> (Arrays.asList(new Product(101 , "maybelline" , 799) ,
+    List<Product> Products =  new ArrayList<> (Arrays.asList(
+            new Product(101 , "maybelline" , 799) ,
             new Product(102 , "loreal" , 899) ,
-            new Product(103 , "bobby brown" , 2899)));
+            new Product(103 , "bobby brown" , 2899)
+    ));
 
 
     public List<Product> getproducts() {
@@ -34,5 +36,13 @@ public class ProductService {
             }
         }
         return product;
+    }
+    public void deleteproduct(int pid) {
+        int index = 0;
+        for (Product p : Products) {
+            if (p.getPid() == pid) {
+                Products.remove(index);
+            }
+        }
     }
 }

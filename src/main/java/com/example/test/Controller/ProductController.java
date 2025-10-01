@@ -28,8 +28,13 @@ public class ProductController {
         return service.addproduct(product);
     }
 
-    @PostMapping("/product/update")
+    @PutMapping("/product/update")
     public Product updateproduct(@RequestBody Product product) {
         return service.updateproduct(product);
+    }
+
+    @DeleteMapping("/product/{pid}")
+    public void deleteproduct(@PathVariable("pid") int pid) {
+         service.deleteproduct(pid);
     }
 }
