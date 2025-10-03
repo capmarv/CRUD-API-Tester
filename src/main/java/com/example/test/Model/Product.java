@@ -1,29 +1,31 @@
 package com.example.test.Model;
 
-import lombok.Data;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
-@Data
-
+@Component
+@Entity
 public class Product {
 
-    private int Pid;
+    @Id
+    private int pid;
     private String name;
     private int price;
-
-    public Product( int pid, String name, int price) {
-        this.Pid = pid;
+    public Product() {
+    }
+    public Product(int pid, String name, int price) {
+        this.pid = pid;
         this.name = name;
         this.price = price;
     }
 
     public int getPid() {
-        return Pid;
+        return pid;
     }
 
     public void setPid(int pid) {
-        Pid = pid;
+        this.pid = pid;
     }
 
     public String getName() {
@@ -41,5 +43,5 @@ public class Product {
     public void setPrice(int price) {
         this.price = price;
     }
-
 }
+

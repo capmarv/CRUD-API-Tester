@@ -1,48 +1,35 @@
 package com.example.test.Service;
 
 import com.example.test.Model.Product;
+import com.example.test.Repository.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class ProductService {
 
-    List<Product> Products =  new ArrayList<> (Arrays.asList(
-            new Product(101 , "maybelline" , 799) ,
-            new Product(102 , "loreal" , 899) ,
-            new Product(103 , "bobby brown" , 2899)
-    ));
-
+    @Autowired
+    private ProductRepo repo;
 
     public List<Product> getproducts() {
-    return Products;
+        return repo.findAll();
     }
 
     public Product getproductById(int pid) {
-        return Products.stream().filter(product -> product.getPid() == pid).findFirst().get();
+        return repo.findById(pid).orElse(new Product());
     }
+
     public Product addproduct(Product product) {
-        Products.add(product);
-        return product;
+        return repo.save(product); // return saved entity
     }
+
     public Product updateproduct(Product product) {
-        int index = 0;
-        for (Product p : Products) {
-            if (p.getPid() == product.getPid()) {
-                product.setPid(p.getPid());
-            }
-        }
-        return product;
+        return repo.save(product); // return updated entity
     }
+
     public void deleteproduct(int pid) {
-        int index = 0;
-        for (Product p : Products) {
-            if (p.getPid() == pid) {
-                Products.remove(index);
-            }
-        }
+        repo.deleteById(pid); // no return needed
     }
 }
