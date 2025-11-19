@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -13,23 +14,36 @@ public class ProductService {
     @Autowired
     private ProductRepo repo;
 
-    public List<Product> getproducts() {
+    // Get all products
+    public List<Product> getProducts() {
         return repo.findAll();
     }
 
-    public Product getproductById(int pid) {
-        return repo.findById(pid).orElse(new Product());
+    // Get product by ID
+    public Product getProductById(int pid) {
+        return repo.findById(pid).orElse(null); // return null if not found
     }
 
-    public Product addproduct(Product product) {
-        return repo.save(product); // return saved entity
+    // Add new product
+    public Product addProduct(Product product) {
+        return repo.save(product);
     }
 
-    public Product updateproduct(Product product) {
-        return repo.save(product); // return updated entity
+    // Update existing product
+    public Product updateProduct(int pid, Product product) {
+        Optional<Product> existing = repo.findById(pid);
+        if (existing.isPresent()) {
+            Product p = existing.get();
+            p.setName(product.getName());
+            p.setPrice(product.getPrice());
+            return repo.save(p);
+        } else {
+            return null; // or throw an exception
+        }
     }
 
-    public void deleteproduct(int pid) {
-        repo.deleteById(pid); // no return needed
+    public void deleteProduct(int pid) {
+        repo.deleteById(pid);
     }
 }
+
